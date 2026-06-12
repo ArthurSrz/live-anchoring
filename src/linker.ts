@@ -44,14 +44,14 @@ interface Segment {
 function splitSegments(content: string): Segment[] {
 	const segments: Segment[] = [];
 	let pos = 0;
+	let m: RegExpExecArray | null;
 	PROTECTED.lastIndex = 0;
-	for (const m of content.matchAll(PROTECTED)) {
-		const idx = m.index ?? 0;
-		if (idx > pos) {
-			segments.push({ protected: false, start: pos, text: content.slice(pos, idx) });
+	while ((m = PROTECTED.exec(content)) !== null) {
+		if (m.index > pos) {
+			segments.push({ protected: false, start: pos, text: content.slice(pos, m.index) });
 		}
-		segments.push({ protected: true, start: idx, text: m[0] });
-		pos = idx + m[0].length;
+		segments.push({ protected: true, start: m.index, text: m[0] });
+		pos = m.index + m[0].length;
 	}
 	if (pos < content.length) {
 		segments.push({ protected: false, start: pos, text: content.slice(pos) });
@@ -80,19 +80,22 @@ export function computeClaims(
 	const claims: Claim[] = [];
 
 	for (const title of candidates) {
+		// A consumed leading-boundary group instead of a lookbehind:
+		// lookbehinds are unsupported on iOS WebKit before 16.4.
 		const pattern = new RegExp(
-			"(?<![\\[\\p{L}\\p{N}_])" + escapeRegExp(title) + "(?![\\]\\p{L}\\p{N}_])",
+			"(^|[^\\[\\p{L}\\p{N}_])(" + escapeRegExp(title) + ")(?![\\]\\p{L}\\p{N}_])",
 			options.exactCase ? "gu" : "giu"
 		);
 		let claimedThisTitle = false;
 		for (const seg of segments) {
 			if (seg.protected || (claimedThisTitle && options.firstOccurrenceOnly)) continue;
-			for (const m of seg.text.matchAll(pattern)) {
-				const start = seg.start + (m.index ?? 0);
-				const end = start + m[0].length;
+			let m: RegExpExecArray | null;
+			while ((m = pattern.exec(seg.text)) !== null) {
+				const start = seg.start + m.index + m[1].length;
+				const end = start + m[2].length;
 				const overlaps = claims.some((c) => start < c.end && end > c.start);
 				if (overlaps) continue;
-				claims.push({ start, end, text: m[0], title });
+				claims.push({ start, end, text: m[2], title });
 				claimedThisTitle = true;
 				if (options.firstOccurrenceOnly) break;
 			}

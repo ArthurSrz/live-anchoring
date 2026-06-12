@@ -36,6 +36,14 @@ Two seconds later:
 | Excluded folders | — | never auto-anchor notes in these folders |
 | Show notices | on | "Anchored 3 links" notification |
 
+## Vault access & privacy
+
+To know what can become a link, the plugin lists the **file names** of the markdown notes in your vault (via `vault.getMarkdownFiles()`). That is the entire extent of its vault access:
+
+- It reads note **titles only** — never the content of any note other than the one you are editing.
+- It writes only to the note you are actively editing, through the editor, as a single undoable transaction.
+- It makes **no network requests** and collects no data. Everything happens locally.
+
 ## Install
 
 From the community plugin store: search **Live Anchoring**.

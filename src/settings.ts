@@ -53,7 +53,6 @@ export class LiveAnchoringSettingTab extends PluginSettingTab {
 				slider
 					.setLimits(500, 10000, 250)
 					.setValue(this.plugin.settings.debounceMs)
-					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings.debounceMs = value;
 						await this.plugin.saveSettings();
@@ -67,7 +66,6 @@ export class LiveAnchoringSettingTab extends PluginSettingTab {
 				slider
 					.setLimits(1, 10, 1)
 					.setValue(this.plugin.settings.minTitleLength)
-					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings.minTitleLength = value;
 						await this.plugin.saveSettings();

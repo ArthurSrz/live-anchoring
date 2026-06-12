@@ -1,6 +1,6 @@
 {
 	"name": "live-anchoring",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Obsidian plugin that turns words matching existing note titles into wikilinks as you write.",
 	"main": "main.js",
 	"scripts": {
@@ -13,7 +13,6 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^20.14.0",
-		"builtin-modules": "^3.3.0",
 		"esbuild": "^0.25.0",
 		"obsidian": "latest",
 		"tslib": "^2.6.0",

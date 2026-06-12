@@ -1,0 +1,10 @@
+{
+	"id": "live-anchoring",
+	"name": "Live Anchoring",
+	"version": "1.0.0",
+	"minAppVersion": "1.4.0",
+	"description": "Anchor your writing to your vault: when you pause typing, words that match existing note titles become wikilinks automatically.",
+	"author": "Arthur Sarazin",
+	"authorUrl": "https://github.com/ArthurSrz",
+	"isDesktopOnly": false
+}

@@ -1,0 +1,23 @@
+{
+	"name": "live-anchoring",
+	"version": "1.0.0",
+	"description": "Obsidian plugin that turns words matching existing note titles into wikilinks as you write.",
+	"main": "main.js",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"test": "tsx --test test/linker.test.ts"
+	},
+	"keywords": ["obsidian", "wikilink", "autolink"],
+	"author": "Arthur Sarazin",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^20.14.0",
+		"builtin-modules": "^3.3.0",
+		"esbuild": "^0.25.0",
+		"obsidian": "latest",
+		"tslib": "^2.6.0",
+		"tsx": "^4.19.0",
+		"typescript": "^5.5.0"
+	}
+}
